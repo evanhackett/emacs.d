@@ -4,6 +4,8 @@ This is a WIP emacs config inspired by spacemacs.
 
 I really liked the ergonomics of spacemacs but I had a hard time tweaking it because I didn't know how anything worked. I decided to learn emacs from scratch and build up my own config to mimic some of the functionality I liked about spacemacs. I'm pretty happy with it so far, and I'd recommend others to try something similar if they feel that emacs starter kits are too overwhelming.
 
+I don't really recommend anyone use this as-is, because it is highly specific to my tastes. The best part about emacs is how configurable it is, so you should make your emacs exactly how **you** want it to be. If you want to create something similar, check out the sections below.
+
 ## Learning Resources
 
 The following resources were a big help getting started:
