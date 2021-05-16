@@ -130,10 +130,19 @@
 ;; set font size (the value is in 1/10pt, so 100 will give you 10pt, etc.)
 (set-face-attribute 'default nil :height 160)
 
-;; color themes
 
 (use-package dracula-theme
-  :init (load-theme 'dracula t))
+;  :init (load-theme 'dracula t)
+  )
+
+(use-package doom-themes
+  :init (load-theme 'doom-dracula t))
+
+(use-package all-the-icons)
+
+(use-package doom-modeline
+  :init (doom-modeline-mode 1)
+  :custom ((doom-modeline-height 15)))
 
 
 (use-package rainbow-delimiters
@@ -355,8 +364,15 @@ create it and write the initial message into it."
 (recentf-mode 1)
 
 ; Language Server Protocol
+
+(defun ewh/lsp-mode-setup ()
+  ;; set up header breadcrumb which will show path info of the current file
+  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (lsp-headerline-breadcrumb-mode))
+
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
+  :hook (lsp-mode . ewh/lsp-mode-setup)
   :init
   ;; before setting up the leader key I have to setup the keymap-prefix or else which-key docs won't be available on the prefixes.
   (setq lsp-keymap-prefix "SPC l")
@@ -374,6 +390,15 @@ create it and write the initial message into it."
   :after lsp)
 
 (use-package lsp-ivy)
+
+(use-package company
+  :after lsp-mode
+  :hook (lsp-mode . company-mode)
+  :bind (:map company-active-map
+         ("<tab>" . company-complete-selection))
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 0.0))
 
 (use-package typescript-mode
   :mode "\\.ts\\'"
@@ -397,8 +422,7 @@ create it and write the initial message into it."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(vdiff-magit magit typescript-mode lsp-ivy lsp-treemacs lsp-ui lsp-mode which-key evil evil-collection dracula-theme rainbow-delimiters counsel ivy-rich helpful general crux elixir-mode exec-path-from-shell alchemist projectile use-package counsel-projectile treemacs treemacs-evil js2-mode json-mode)))
+ '(package-selected-packages '(doom-modeline doom-themes use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
