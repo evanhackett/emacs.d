@@ -94,6 +94,11 @@
 ;; make cursor movement stop in between camelCase words.
 (global-subword-mode 1)
 
+;; upon changing emacs versions, cmd-v no longer pastes in osx.
+;; here we set cmd-v to paste from clipboard and cmd-c to copy to clipboard
+(global-set-key (kbd "M-v") 'clipboard-yank)
+(global-set-key (kbd "M-c") 'clipboard-kill-ring-save)
+
 
 (use-package evil
   :init
