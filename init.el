@@ -4,12 +4,16 @@
 ;; Initialize package sources
 (require 'package)
 
+;; fixes bug with package downloads.
+;; found this from: https://emacs.stackexchange.com/questions/51721/failed-to-download-gnu-archive/51772#51772
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
 ;; package repositories
 ;; also set priority. Mainly to prefer Melpa Stable over Melpa.
 (setq package-archives
       '(("gnu"          . "http://elpa.gnu.org/packages/")
-        ("melpa"        . "http://melpa.milkbox.net/packages/")
-        ("melpa-stable" . "http://stable.melpa.org/packages/")
+        ("melpa"        . "https://melpa.org/packages/")
+        ("melpa-stable" . "https://stable.melpa.org/packages/")
         ("org"          . "https://orgmode.org/elpa/"))
       package-archive-priorities
       '(("melpa-stable" . 10)
@@ -134,7 +138,10 @@
 (key-chord-define-global "fd" 'evil-normal-state)
 
 ;; set font size (the value is in 1/10pt, so 100 will give you 10pt, etc.)
-(set-face-attribute 'default nil :height 160)
+;(set-face-attribute 'default nil :font "Source Code Pro" :height 180)
+;(set-face-attribute 'default nil :font "Iosevka" :height 180)
+;(set-face-attribute 'default nil :font "Hack Nerd Font Mono" :height 180)
+(set-face-attribute 'default nil :font "JetBrains Mono" :height 180)
 
 
 (use-package dracula-theme
@@ -323,6 +330,7 @@ create it and write the initial message into it."
     "ss" '(shell :which-key "open shell")
     "se" '(eshell :which-key "open eshell")
     "st" '(term :which-key "open terminal emulator")
+    "sc" '(shell-command :which-key "shell command")
 
     ; misc
     "m"  '(:ignore t :which-key "misc")
@@ -421,11 +429,18 @@ create it and write the initial message into it."
   :mode "\\.elm\\'"
   :hook ((elm-mode . lsp-deferred)
          (elm-mode . elm-format-on-save-mode))) ;format on save doesn't seem to work. Need to figure this out. For now calling elm-format manually works though.
-  
 
+(use-package lua-mode)
 
 (use-package json-mode)
 (use-package js2-mode)
+
+;; python IDE
+(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable))
+
 
 
 (custom-set-variables
@@ -434,7 +449,7 @@ create it and write the initial message into it."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(evil-nerd-commenter doom-modeline doom-themes use-package)))
+   '(elpy lsp-pyright lua-mode evil-nerd-commenter doom-modeline doom-themes use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
