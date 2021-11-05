@@ -343,10 +343,20 @@ create it and write the initial message into it."
     "st" '(term :which-key "open terminal emulator")
     "sc" '(shell-command :which-key "shell command")
 
+    ; code
+    "c"  '(:ignore t :which-key "code")
+    "cc" '(comment-dwim :which-key "comment/uncomment region")
+
+    ; org
+    "o" '(:ignore t :which-key "org mode")
+    "oi"  '(:ignore t :which-key "insert")
+    "oil" '(org-insert-link :which-key "insert link")
+    
     ; misc
     "m"  '(:ignore t :which-key "misc")
     "mx" '(counsel-M-x :which-key "M-x")
     "mq" '(fill-paragraph :which-key "fill-paragraph")
+    "mm" '(which-key-show-major-mode :which-key "show major mode bindings")
     ))
 
 ;; set up PATH
@@ -390,7 +400,17 @@ create it and write the initial message into it."
 
 (use-package evil-nerd-commenter
   ;; press alt-/ to comment/uncomment lines
-  :bind ("M-/" . evilnc-comment-or-uncomment-lines)) 
+  :bind ("M-/" . evilnc-comment-or-uncomment-lines))
+
+(use-package evil-org
+  :ensure t
+  :after org
+  :ghook 'org-mode-hook
+  :config
+  (evil-org-set-key-theme '(navigation todo insert textobjects additional))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys)
+)
 
 
 ; Language Server Protocol
@@ -460,7 +480,7 @@ create it and write the initial message into it."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(elpy lsp-pyright lua-mode evil-nerd-commenter doom-modeline doom-themes use-package)))
+   '(evil-org ivy-rich org-plus-contrib elpy lsp-pyright lua-mode evil-nerd-commenter doom-modeline doom-themes use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
