@@ -151,7 +151,7 @@
 ;(set-face-attribute 'default nil :font "Source Code Pro" :height 180)
 ;(set-face-attribute 'default nil :font "Iosevka" :height 180)
 ;(set-face-attribute 'default nil :font "Hack Nerd Font Mono" :height 180)
-(set-face-attribute 'default nil :font "JetBrains Mono" :height 180)
+(set-face-attribute 'default nil :font "JetBrains Mono" :height 160)
 
 
 (use-package dracula-theme
@@ -159,7 +159,7 @@
   )
 
 (use-package doom-themes
-  :init (load-theme 'doom-dracula t))
+  :init (load-theme 'doom-solarized-light t))
 
 (use-package all-the-icons)
 
