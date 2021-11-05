@@ -35,7 +35,7 @@
       '(use-package))
 
 ;; execute all of your package autoloads (among other things)
-(package-initialize)
+;(package-initialize) ; commenting out for now since I get an error "unnecessary package-initialize"
 (unless package-archive-contents
   (package-refresh-contents))
 ;; install packages from your user-installed packages list
