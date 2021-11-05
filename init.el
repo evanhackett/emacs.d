@@ -235,7 +235,8 @@
 (use-package ivy-rich
   :init
   (ivy-rich-mode 1)
-  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line))
+  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
+  :pin melpa)
 
 ;; helpful is an alternative to the built-in Emacs help that provides more contextual information and improved UI
 (use-package helpful
