@@ -445,10 +445,10 @@ create it and write the initial message into it."
 (use-package js2-mode)
 
 ;; python IDE
-(use-package elpy
-  :ensure t
-  :init
-  (elpy-enable))
+;; (use-package elpy
+;;   :ensure t
+;;   :init
+;;   (elpy-enable))
 
 
 
