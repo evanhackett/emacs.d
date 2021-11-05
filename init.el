@@ -45,6 +45,14 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+;; automatically update packages periodically
+(use-package auto-package-update
+  :config
+  (setq auto-package-update-delete-old-versions t)
+  (setq auto-package-update-hide-results t)
+  (auto-package-update-maybe))
+
+
 ;; show line numbers in margin
 (when (version<= "26.0.50" emacs-version )
   (global-display-line-numbers-mode))
