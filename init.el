@@ -355,6 +355,15 @@ create it and write the initial message into it."
     "oil" '(org-insert-link :which-key "insert link")
     "oit" '(org-insert-todo-heading-respect-content :which-key "insert todo")
     
+    ; version control
+    "v" '(:ignore t :which-key "version control")
+    "vs" '(magit-status :which-key "status")
+    "vd" '(magit-diff-buffer-file :which-key "diff buffer")
+    "vb" '(magit-blame-addition :which-key "blame")
+    "vl" '(:ignore t :which-key "log")
+    "vlb" '(magit-log-buffer-file :which-key "log buffer")
+    "vla" '(magit-log-all :which-key "log all")
+    
     ; misc
     "m"  '(:ignore t :which-key "misc")
     "mx" '(counsel-M-x :which-key "M-x")
