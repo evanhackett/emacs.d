@@ -96,7 +96,7 @@
   :config
   ; delay time for which-key menu popup
   (setq which-key-idle-delay 0.15)
-  (setq which-key-min-display-lines 3)
+  (setq which-key-min-display-lines 5)
 )
 
 ;; show paren matching
