@@ -272,6 +272,8 @@ create it and write the initial message into it."
     (switch-to-buffer scratch-buffer)))
 
 
+;; Keybindings -------------------------------------------------------------------------------
+
 ;; General (leader-key bindings)
 (use-package general
   :config
@@ -351,6 +353,7 @@ create it and write the initial message into it."
     "o" '(:ignore t :which-key "org mode")
     "oi"  '(:ignore t :which-key "insert")
     "oil" '(org-insert-link :which-key "insert link")
+    "oit" '(org-insert-todo-heading-respect-content :which-key "insert todo")
     
     ; misc
     "m"  '(:ignore t :which-key "misc")
@@ -358,6 +361,8 @@ create it and write the initial message into it."
     "mq" '(fill-paragraph :which-key "fill-paragraph")
     "mm" '(which-key-show-major-mode :which-key "show major mode bindings")
     ))
+
+;; end keybindings -------------------------------------------------------------------------------
 
 ;; set up PATH
 ;; Todo: move some of this setup inside use-package init?
@@ -386,7 +391,66 @@ create it and write the initial message into it."
 
 (use-package magit)
 
-(use-package org)
+
+;; Org Mode -------------------------------------------------------------------
+
+(defun ewh/org-mode-setup ()
+  (org-indent-mode)
+  (variable-pitch-mode 1)
+  (visual-line-mode 1))
+
+(defun ewh/org-font-setup ()
+  ;; Set faces for heading levels
+  (dolist (face '((org-level-1 . 1.2)
+                  (org-level-2 . 1.1)
+                  (org-level-3 . 1.05)
+                  (org-level-4 . 1.0)
+                  (org-level-5 . 1.1)
+                  (org-level-6 . 1.1)
+                  (org-level-7 . 1.1)
+                  (org-level-8 . 1.1)))
+    (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face)))
+
+  ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+  (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
+
+(use-package org
+  :hook (org-mode . ewh/org-mode-setup)
+  :config
+  (setq org-ellipsis " ▾")
+  (ewh/org-font-setup))
+
+(use-package evil-org
+  :ensure t
+  :after org
+  :ghook 'org-mode-hook
+  :config
+  (evil-org-set-key-theme '(navigation todo insert textobjects additional))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys)
+  )
+
+(use-package org-bullets
+  :after org
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+
+(defun ewh/org-mode-visual-fill ()
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+
+(use-package visual-fill-column
+  :hook (org-mode . ewh/org-mode-visual-fill))
+
+;; end Org Mode Config -------------------------------------------------------
 
 (use-package treemacs
   :ensure t)
@@ -402,15 +466,7 @@ create it and write the initial message into it."
   ;; press alt-/ to comment/uncomment lines
   :bind ("M-/" . evilnc-comment-or-uncomment-lines))
 
-(use-package evil-org
-  :ensure t
-  :after org
-  :ghook 'org-mode-hook
-  :config
-  (evil-org-set-key-theme '(navigation todo insert textobjects additional))
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys)
-)
+
 
 
 ; Language Server Protocol
@@ -480,7 +536,7 @@ create it and write the initial message into it."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(evil-org ivy-rich org-plus-contrib elpy lsp-pyright lua-mode evil-nerd-commenter doom-modeline doom-themes use-package)))
+   '(visual-fill-column org-bullets evil-org ivy-rich org-plus-contrib elpy lsp-pyright lua-mode evil-nerd-commenter doom-modeline doom-themes use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
