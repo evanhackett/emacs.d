@@ -353,6 +353,8 @@ create it and write the initial message into it."
     "oi"  '(:ignore t :which-key "insert")
     "oil" '(org-insert-link :which-key "insert link")
     "oit" '(org-insert-todo-heading-respect-content :which-key "insert todo")
+    "ot"  '(:ignore t :which-key "toggles")
+    "otl" '(org-toggle-link-display :which-key "toggle link display")
     
     ; version control
     "v" '(:ignore t :which-key "version control")
