@@ -134,7 +134,8 @@
 (use-package evil-collection
   :after evil
   :config
-  (evil-collection-init))
+  (evil-collection-init)
+  :pin melpa)
 
 
 ;; add to load path (this is where "require" looks for files, similar to PATH on unix)
@@ -514,7 +515,8 @@ create it and write the initial message into it."
          ("<tab>" . company-complete-selection))
   :custom
   (company-minimum-prefix-length 1)
-  (company-idle-delay 0.0))
+  (company-idle-delay 0.0)
+  :pin melpa)
 
 (use-package typescript-mode
   :mode "\\.ts\\'"
