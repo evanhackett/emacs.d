@@ -529,18 +529,15 @@ create it and write the initial message into it."
   :hook ((elm-mode . lsp-deferred)
          (elm-mode . elm-format-on-save-mode))) ;format on save doesn't seem to work. Need to figure this out. For now calling elm-format manually works though.
 
+(use-package js2-mode
+  :mode (("\\.js\\'" . js2-mode))
+  :hook (js2-mode . lsp-deferred)
+  :config
+  (setq js-indent-level 4)
+)
+
 (use-package lua-mode)
-
 (use-package json-mode)
-(use-package js2-mode)
-
-;; python IDE
-;; (use-package elpy
-;;   :ensure t
-;;   :init
-;;   (elpy-enable))
-
-
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -548,7 +545,7 @@ create it and write the initial message into it."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(visual-fill-column org-bullets evil-org ivy-rich org-plus-contrib elpy lsp-pyright lua-mode evil-nerd-commenter doom-modeline doom-themes use-package)))
+   '(tide visual-fill-column org-bullets evil-org ivy-rich org-plus-contrib elpy lsp-pyright lua-mode evil-nerd-commenter doom-modeline doom-themes use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
