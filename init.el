@@ -490,13 +490,18 @@ create it and write the initial message into it."
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :hook (lsp-mode . ewh/lsp-mode-setup)
-  :init
-  ;; before setting up the leader key I have to setup the keymap-prefix or else which-key docs won't be available on the prefixes.
-  (setq lsp-keymap-prefix "SPC l")
-  (ewh/leader-keys
-   "l" '(:keymap lsp-command-map :package lsp-mode :which-key "lsp"))
   :config
   (lsp-enable-which-key-integration t))
+
+(ewh/leader-keys
+  "l"  '(:ignore t :which-key "lsp")
+  "ld" 'xref-find-definitions
+  "lr" 'xref-find-references
+  "ln" 'lsp-ui-find-next-reference
+  "lp" 'lsp-ui-find-prev-reference
+  "ls" 'counsel-imenu
+  "le" 'lsp-ui-flycheck-list
+)
 
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
@@ -518,6 +523,12 @@ create it and write the initial message into it."
   (company-idle-delay 0.0)
   :pin melpa)
 
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode)
+  :hook (lsp-mode . flycheck-mode)
+  :pin melpa)
+
 (use-package typescript-mode
   :mode "\\.ts\\'"
   :hook (typescript-mode . lsp-deferred)
@@ -534,7 +545,7 @@ create it and write the initial message into it."
   :hook (js2-mode . lsp-deferred)
   :config
   (setq js-indent-level 4)
-)
+  )
 
 (use-package lua-mode)
 (use-package json-mode)
