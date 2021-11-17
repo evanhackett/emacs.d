@@ -550,6 +550,11 @@ create it and write the initial message into it."
 (use-package lua-mode)
 (use-package json-mode)
 
+;; Scheme setup
+(load "~/.emacs.d/elisp-files/guile-interaction-mode.el")
+;; Need to point emacs to guile executable in order to be able to use the repl
+(setq scheme-program-name "/opt/homebrew/bin/guile")
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
