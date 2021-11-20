@@ -371,7 +371,48 @@ create it and write the initial message into it."
     "mx" '(counsel-M-x :which-key "M-x")
     "mq" '(fill-paragraph :which-key "fill-paragraph")
     "mm" '(which-key-show-major-mode :which-key "show major mode bindings")
-    ))
+    )
+
+  ;; mode-specific leader keys
+  (general-create-definer ewh/local-leader-keys
+    :prefix "SPC l")
+
+  ;; language server protocol
+  (ewh/local-leader-keys
+    :keymaps 'lsp-mode-map
+    "d" 'xref-find-definitions
+    "r" 'xref-find-references
+    "n" 'lsp-ui-find-next-reference
+    "p" 'lsp-ui-find-prev-reference
+    "s" 'counsel-imenu
+    "e" 'lsp-ui-flycheck-list
+    )
+
+  ;; scheme
+  (ewh/local-leader-keys
+    :keymaps 'scheme-mode-map
+    "r" 'run-scheme
+    "e"  '(:ignore t :which-key "eval")
+    "es" 'scheme-send-last-sexp
+    "er" 'scheme-send-region
+    "ed" 'scheme-send-definition
+    "f" 'scheme-load-file
+    )
+
+  ;; elisp
+  (ewh/local-leader-keys
+    :keymaps 'emacs-lisp-mode-map
+    "e"  '(:ignore t :which-key "eval")
+    "eb" 'eval-buffer
+    "ed" 'eval-defun
+    "ee" 'eval-expression
+    "ep" 'pp-eval-last-sexp
+    "es" 'eval-last-sexp
+    "i"  'elisp-index-search
+    "p" 'find-function-at-point
+    )
+  )
+
 
 ;; end keybindings -------------------------------------------------------------------------------
 
@@ -478,8 +519,6 @@ create it and write the initial message into it."
   :bind ("M-/" . evilnc-comment-or-uncomment-lines))
 
 
-
-
 ; Language Server Protocol
 
 (defun ewh/lsp-mode-setup ()
@@ -492,17 +531,6 @@ create it and write the initial message into it."
   :hook (lsp-mode . ewh/lsp-mode-setup)
   :config
   (lsp-enable-which-key-integration t))
-
-(ewh/leader-keys
-  :keymaps 'lsp-mode-map
-  "l"  '(:ignore t :which-key "lsp")
-  "ld" 'xref-find-definitions
-  "lr" 'xref-find-references
-  "ln" 'lsp-ui-find-next-reference
-  "lp" 'lsp-ui-find-prev-reference
-  "ls" 'counsel-imenu
-  "le" 'lsp-ui-flycheck-list
-)
 
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
@@ -555,30 +583,6 @@ create it and write the initial message into it."
 (load "~/.emacs.d/elisp-files/guile-interaction-mode.el")
 ;; Need to point emacs to guile executable in order to be able to use the repl
 (setq scheme-program-name "/opt/homebrew/bin/guile")
-
-(ewh/leader-keys
-  :keymaps 'scheme-mode-map
-  "l"  '(:ignore t :which-key "language")
-  "lr" 'run-scheme
-  "ls" 'scheme-send-last-sexp
-  "lr" 'scheme-send-region
-  "ld" 'scheme-send-definition
-  "lf" 'scheme-load-file
-  )
-
-;; elisp setup
-(ewh/leader-keys
-  :keymaps 'emacs-lisp-mode-map
-  "l"  '(:ignore t :which-key "language")
-  "le"  '(:ignore t :which-key "eval")
-  "leb" 'eval-buffer
-  "led" 'eval-defun
-  "lee" 'eval-expression
-  "lep" 'pp-eval-last-sexp
-  "les" 'eval-last-sexp
-  "li"  'elisp-index-search
-  "lp" 'find-function-at-point
-  )
 
 
 (custom-set-variables
