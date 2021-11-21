@@ -375,7 +375,9 @@ create it and write the initial message into it."
 
   ;; mode-specific leader keys
   (general-create-definer ewh/local-leader-keys
-    :prefix "SPC l")
+    :prefix "SPC l"
+    :states '(normal)
+    )
 
   ;; language server protocol
   (ewh/local-leader-keys
@@ -411,7 +413,7 @@ create it and write the initial message into it."
     "i"  'elisp-index-search
     "p" 'find-function-at-point
     )
-  )
+)
 
 
 ;; end keybindings -------------------------------------------------------------------------------
